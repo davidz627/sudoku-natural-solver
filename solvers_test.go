@@ -48,20 +48,33 @@ func TestOnlyChoice(t *testing.T) {
 			},
 		},
 		{
+			name: "completely solved",
+			sudoku: `123456789
+					 456789123
+					 789123456
+					 234567891
+					 567891234
+					 891234567
+					 345678912
+					 678912345
+					 912345678`,
+			expectedSolutions: []SolvedCell{},
+		},
+		{
 			name: "basic square",
-			sudoku: `1234567..
-					 45.....28
-					 789......
-					 4.2.....1
-					 .9.2...5.
-					 6..5.....
-					 7...6.8.5
-					 8.1...67.
-					 9....7.13`,
+			sudoku: `12..56789
+					 456789123
+					 789123456
+					 23..67891
+					 56..91234
+					 89..34567
+					 34..78912
+					 67..12345
+					 912345678`,
 			expectedSolutions: []SolvedCell{
 				{
-					Cell:   Cell{1, 2},
-					value:  6,
+					Cell:   Cell{0, 2},
+					value:  3,
 					reason: "only choice",
 				},
 			},
@@ -102,7 +115,7 @@ func TestOnlyChoice(t *testing.T) {
 		sudoku := parse(tc.sudoku)
 		solutions := onlyChoice(sudoku)
 		if len(solutions) != len(tc.expectedSolutions) {
-			t.Errorf("expected %d solutions, got %d", len(tc.expectedSolutions), len(solutions))
+			t.Fatalf("expected %d solutions, got %d", len(tc.expectedSolutions), len(solutions))
 		}
 		for i := 0; i < len(solutions); i++ {
 			if solutions[i] != tc.expectedSolutions[i] {

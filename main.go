@@ -48,37 +48,37 @@ type Cell struct {
 
 type SolvedCell struct {
 	Cell
-	value  uint8
+	value  int
 	reason string
 }
 
 type Sudoku struct {
-	matrix [][]uint8
+	matrix [][]int
 }
 
-func sum(arr []uint8) uint8 {
-	sum := uint8(0)
+func sum(arr []int) int {
+	sum := int(0)
 	for _, v := range arr {
 		sum += v
 	}
 	return sum
 }
 
-func getRow(sudoku Sudoku, row int) []uint8 {
+func getRow(sudoku Sudoku, row int) []int {
 	return sudoku.matrix[row]
 }
 
-func getCol(sudoku Sudoku, col int) []uint8 {
-	colArr := make([]uint8, 9)
+func getCol(sudoku Sudoku, col int) []int {
+	colArr := make([]int, 9)
 	for i := 0; i < 9; i++ {
 		colArr[i] = sudoku.matrix[i][col]
 	}
 	return colArr
 }
 
-func getBox(sudoku Sudoku, row int, col int) []uint8 {
+func getBox(sudoku Sudoku, row int, col int) []int {
 	// TODO(p0) this needs to be tested...
-	boxArr := make([]uint8, 9)
+	boxArr := make([]int, 9)
 	// determine what box the row/col is in
 	rowBox := row / 3
 	colBox := col / 3
@@ -102,18 +102,18 @@ func parse(sudoku string) Sudoku {
 	if len(lines) != 9 {
 		panic("wrong number of rows")
 	}
-	matrix := make([][]uint8, 9)
+	matrix := make([][]int, 9)
 	for i, line := range lines {
 		line = strings.TrimSpace(line)
 		if len(line) != 9 {
 			panic("wrong number of columns")
 		}
-		matrix[i] = make([]uint8, 9)
+		matrix[i] = make([]int, 9)
 		for j, c := range line {
 			if c == '.' {
 				matrix[i][j] = 0
 			} else {
-				matrix[i][j] = uint8(c - '0')
+				matrix[i][j] = int(c - '0')
 			}
 		}
 	}
